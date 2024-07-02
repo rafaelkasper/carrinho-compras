@@ -1,4 +1,4 @@
-interface ProductDTO {
+export interface ProductDTO {
   id: number;
   title: string;
   price: number;
@@ -11,4 +11,9 @@ interface ProductDTO {
 interface Rating {
   rate: number;
   count: number;
+}
+
+export interface ICartItem {
+  product: ProductDTO;
+  quantity: number;
 }
