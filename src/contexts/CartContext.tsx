@@ -46,14 +46,14 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
     const existingProduct = cart.find(({ product }) => value.id === product.id);
 
     if (existingProduct) {
-      const newcart = cart.map((item) =>
+      const newCart = cart.map((item) =>
         item.product.id === existingProduct.product.id
           ? { ...item, quantity: item.quantity ? item.quantity + 1 : 1 }
           : item
       );
 
-      setCart(newcart);
-      storeCart(newcart);
+      setCart(newCart);
+      storeCart(newCart);
     } else {
       const newCart = [...cart];
       const data: ICartItem = { product: value, quantity: 1 };
@@ -63,8 +63,18 @@ export const CartContextProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  // TODO
-  const removeProduct = () => {};
+  const removeProduct = (id: number) => {
+    /*
+     Pega o array que contém os produtos que estão no carrinho
+     Deixa passar somente os itens que atendem a condição
+     Atribui à variável os item que passaram na condição
+    */
+    const newCart = cart.filter((c) => c.product.id !== id);
+    // Salva no state (memória provisória enquanto o app está executando)
+    setCart(newCart);
+    // Salva na memória permanente do aparelho
+    storeCart(newCart);
+  };
 
   return (
     <CartContext.Provider value={{ cart, getCart, addProduct, removeProduct }}>
